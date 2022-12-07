@@ -10,6 +10,10 @@ enum Play: UInt {
     }
 }
 
+enum Outcome {
+    case I_Lose, Draw, I_Win
+}
+
 var total_score: UInt = 0
 for line in lines {
     let plays = line.split(separator: " ")
@@ -25,11 +29,11 @@ for line in lines {
             precondition(false, "Expected A|B|C, got: \(plays[0])")
     }
 
-    var my_play : Play = .Rock
+    var outcome: Outcome = .I_Lose
     switch(plays[1]) {
-        case "X": my_play = .Rock
-        case "Y": my_play = .Paper
-        case "Z": my_play = .Scissor
+        case "X": outcome = .Lose
+        case "Y": outcome = .Draw
+        case "Z": outcome = .Win
         default:
             precondition(false, "Expected X|Y|Z, got: \(plays[1])")
     }
