@@ -41,8 +41,8 @@ for line in lines {
     var my_play: Play = .Rock
     switch ((their_play, outcome)) {
         case (_, .Draw): my_play = their_play
-        case (.Rock, .I_Win): my_play = .Scissor
-        case (.Paper, .I_Win): my_play = .Rock
+        case (.Rock, .I_Win): my_play = .Paper
+        case (.Paper, .I_Win): my_play = .Scissor
         case (.Scissor, .I_Win): my_play = .Rock
         case (.Rock, .I_Lose): my_play = .Scissor
         case (.Paper, .I_Lose): my_play = .Rock
