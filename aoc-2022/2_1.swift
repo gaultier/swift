@@ -14,6 +14,7 @@ var total_score: UInt = 0
 for line in lines {
     let plays = line.split(separator: " ")
     if (plays.isEmpty) { break }
+    precondition(plays.count == 2, String(plays.count))
     
     var their_play : Play = .Rock
     switch(plays[0]) {
@@ -35,9 +36,9 @@ for line in lines {
 
     var play_score: UInt = 0 
     switch ((their_play, my_play)) {
-        case (_, _) where their_play == my_play: play_score = 3 
-        case (_, _) where my_play.rawValue > their_play.rawValue: play_score = 6
-        default:  do{}
+        case (_, _) where their_play == my_play: play_score = 3  // Draw
+        case (_, _) where my_play.rawValue > their_play.rawValue: play_score = 6 // Win for me
+        default:  do{} // Loss for me
     }
     let round_score = my_play.score() + play_score
     print(their_play, my_play, "\(my_play.score()) + \(play_score) = \(round_score) => total before = \(total_score), after = \(total_score+round_score)")
