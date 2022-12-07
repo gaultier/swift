@@ -10,8 +10,8 @@ enum Play: UInt {
     }
 }
 
-enum Outcome {
-    case I_Lose, Draw, I_Win
+enum Outcome: UInt {
+    case I_Lose = 0, Draw = 3, I_Win = 6
 }
 
 var total_score: UInt = 0
@@ -31,19 +31,26 @@ for line in lines {
 
     var outcome: Outcome = .I_Lose
     switch(plays[1]) {
-        case "X": outcome = .Lose
+        case "X": outcome = .I_Lose
         case "Y": outcome = .Draw
-        case "Z": outcome = .Win
+        case "Z": outcome = .I_Win
         default:
             precondition(false, "Expected X|Y|Z, got: \(plays[1])")
     }
 
-    var play_score: UInt = 0 
-    switch ((their_play, my_play)) {
-        case (_, _) where their_play == my_play: play_score = 3  // Draw
-        case (.Rock, .Paper), (.Paper, .Scissor), (.Scissor, .Rock): play_score = 6 // Win for me
-        default:  do{} // Loss for me
+    var my_play: Play = .Rock
+    switch ((their_play, outcome)) {
+        case (_, .Draw): my_play = their_play
+        case (.Rock, .I_Win): my_play = .Scissor
+        case (.Paper, .I_Win): my_play = .Rock
+        case (.Scissor, .I_Win): my_play = .Rock
+        case (.Rock, .I_Lose): my_play = .Scissor
+        case (.Paper, .I_Lose): my_play = .Rock
+        case (.Scissor, .I_Lose): my_play = .Paper
     }
+
+    let play_score: UInt = outcome.rawValue
+
     let round_score = my_play.score() + play_score
 
     total_score += round_score
