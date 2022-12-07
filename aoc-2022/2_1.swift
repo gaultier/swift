@@ -28,7 +28,7 @@ for line in lines {
         case (_, _):  do{}
     }
     let round_score = my_play.score() + play_score
-    print(their_play, my_play, my_play.score(), play_score, round_score, total_score)
+    print(their_play, my_play, "\(my_play.score()) + \(play_score) = \(round_score) => total before = \(total_score), after = \(total_score+round_score)")
 
     total_score += round_score
 }
