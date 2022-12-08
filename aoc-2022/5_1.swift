@@ -12,7 +12,7 @@ let lines = input.split(separator: "\n")
 var stacks : Array<Array<Character>> = [[]]
 var moves : Array<Move> = []
 
-for (row, line) in lines.enumerated() {
+for (_, line) in lines.enumerated() {
     if (line.isEmpty) { break }
     if (line == "\n") { continue }
 
@@ -28,11 +28,13 @@ for (row, line) in lines.enumerated() {
 
             let crate_name = crate.dropFirst()
             let column = line[...crate_begin!].count / 4
-            print(row, column, crate_name)
 
             if (stacks.count <= column) {
-                stacks.append([])
+                for _ in 0...column - stacks.count {
+                    stacks.append([])
+                }
             }
+            precondition(column < stacks.count, "\(column) \(stacks.count)")
             stacks[column].insert(crate_name.first!, at: 0)
 
             remaining = remaining[crate_end...].dropFirst()
@@ -45,11 +47,11 @@ for (row, line) in lines.enumerated() {
         // 1-indexed
         let from = (Int(parts[3]) ?? 0) - 1
         let to = (Int(parts[5]) ?? 0) - 1
-        print(row, crates_count, from, to)
 
         moves.append(Move(count: crates_count, from: from, to: to))
     }
 }
+
 
 for move in moves {
     for _ in 1...move.count {
