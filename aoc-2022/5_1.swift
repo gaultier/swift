@@ -26,7 +26,7 @@ for (row, line) in lines.enumerated() {
             if (stacks.count <= column) {
                 stacks.append([])
             }
-            stacks[column].append(crate_name.first.unsafelyUnwrapped)
+            stacks[column].insert(crate_name.first.unsafelyUnwrapped, at: 0)
 
             remaining = remaining[crate_end...].dropFirst()
         }
