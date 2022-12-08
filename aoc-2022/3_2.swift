@@ -10,7 +10,9 @@ func char_to_priority(c: Character) -> UInt8 {
     default: 
         assert(false)
     }
+    return 0
 }
+
 var sum : UInt = 0
 for i in stride(from: 0, to: lines.count, by: 3) {
   if lines[i] == "\n" || lines[i].isEmpty { break }

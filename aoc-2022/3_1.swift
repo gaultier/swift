@@ -10,6 +10,7 @@ func char_to_priority(c: Character) -> UInt8 {
     default: 
         assert(false)
     }
+    return 0
 }
 
 var sum : UInt = 0
