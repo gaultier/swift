@@ -3,6 +3,8 @@ import Foundation
 var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
+var stacks : Array<Array<Character>> = [[]]
+
 for (row, line) in lines.enumerated() {
     if (line.isEmpty) { break }
     if (line == "\n") { continue }
@@ -10,14 +12,21 @@ for (row, line) in lines.enumerated() {
     if (line.contains("[")) { // Crates
         var remaining = line
 
-        for column in  0... {
+        while (true) {
             let crate_begin = remaining.firstIndex(of: "[")
             if (crate_begin == nil) { break }
 
             let crate_end = remaining[crate_begin.unsafelyUnwrapped...].firstIndex(of: "]").unsafelyUnwrapped
             let crate = remaining[crate_begin.unsafelyUnwrapped..<crate_end]
 
-            print(row, column, crate.dropFirst())
+            let crate_name = crate.dropFirst()
+            let column = line[...crate_begin.unsafelyUnwrapped].count / 4
+            print(row, column, crate_name)
+
+            if (stacks.count <= column) {
+                stacks.append([])
+            }
+            stacks[column].append(crate_name.first.unsafelyUnwrapped)
 
             remaining = remaining[crate_end...].dropFirst()
         }
@@ -31,3 +40,5 @@ for (row, line) in lines.enumerated() {
         print(row, crates_count, from, to)
     }
 }
+
+print(stacks)
