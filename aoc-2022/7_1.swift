@@ -28,6 +28,10 @@ class FSEntry {
     }
 
     func cdAndMaybeMkdir(path: FilePath) -> FSEntry  {
+        if (path == "/" && self.path == "/") {
+            return self
+        } 
+
         let child = children.first(where: {entry in entry.path == path})
         if let child = child {
             return child
@@ -132,3 +136,4 @@ root.printDebug(spaces: 0)
 var directorySizes: [FilePath : Int] = [:]
 root.collectDirectorySize(directorySizes: &directorySizes)
 print(directorySizes)
+
