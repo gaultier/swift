@@ -6,31 +6,38 @@ struct File {
     let size: Int
 }
 
+enum FSEntryKind {
+    case File, Directory
+}
+
 class FSEntry {
+    let kind: FSEntryKind
     var size: Int
     let path: FilePath
     var children: [FSEntry]
     let parent: FSEntry?
 
-    init(size: Int, path: FilePath, parent: FSEntry?) {
+    init(kind: FSEntryKind, size: Int, path: FilePath, parent: FSEntry?) {
+        self.kind = kind
         self.size = size
         self.path = path
         self.children = []
         self.parent = parent
     }
 
-    func add_file_to_directory(file_path: FilePath, file_size: Int) {
+    func addFileToDirectory(file_path: FilePath, file_size: Int) {
                 size += file_size
-                children.append(FSEntry(size: file_size, path: file_path, parent: fs_entry))
+                children.append(FSEntry(kind: FSEntryKind.File, size: file_size, path: file_path, parent: fs_entry))
     }
 
-    func cd(path: FilePath) -> FSEntry  {
+    func cdAndMaybeMkdir(path: FilePath) -> FSEntry  {
         let child = children.first(where: {entry in entry.path == path})
         if let child = child {
             return child
         }
 
-        children.append(FSEntry(size: 0, path: path, parent: self))
+        // mkdir
+        children.append(FSEntry(kind: FSEntryKind.Directory, size: 0, path: path, parent: self))
         return children.last!
     }
 
@@ -41,6 +48,23 @@ class FSEntry {
         }
         return s
     }
+
+    func computeSize() -> Int {
+        var size = self.size
+        for c in self.children {
+            size += c.size
+        }
+        return size
+    }
+
+    func collectDirectorySize(directorySizes: inout [FilePath : Int]) {
+       if (self.kind != FSEntryKind.Directory) { return }
+
+       directorySizes[self.path] = self.computeSize() 
+       for c in self.children {
+           c.collectDirectorySize(directorySizes: &directorySizes)
+       }
+    }
 }
 
 
@@ -49,8 +73,9 @@ let lines = input.split(separator: "\n")
 
 
 var cwd : FilePath = "/"
-var fs_entry = FSEntry(size: 0, path: "/", parent: nil)
+var fs_entry = FSEntry(kind: FSEntryKind.Directory, size: 0, path: "/", parent: nil)
 let root = fs_entry
+
 
 for line in lines {
     let parts = line.split(separator: " ")
@@ -61,24 +86,29 @@ for line in lines {
            let cmd_arg = parts.last!
            cwd.append(String(cmd_arg))
            cwd.lexicallyNormalize()
-           print("cwd=\(cwd)")
+           print("[D002] cwd=\(cwd)")
        } 
     }  else if (line.starts(with: "dir")) { // Output of `ls`, dir
-        let dir : FilePath = FilePath(String(parts.last!))
-        print(dir)
-        fs_entry = fs_entry.cd(path: dir)
+        let dir : FilePath = cwd.appending(String(parts.last!))
+        print("[D003] \(dir)")
+        fs_entry = fs_entry.cdAndMaybeMkdir(path: dir)
     } else { //  Output of `ls`, file
         let file_size = Int(parts.first!) ?? 0
         let file_name = parts.last!
-        print(file_name, file_size)
+        print("[D004] \(file_name) \(file_size)")
         
         let file_path = cwd.appending(String(file_name)).lexicallyNormalized()
-        print("[D002] \(cwd) \(file_path)")
+        print("[D005] \(cwd) \(file_path)")
 
-        fs_entry.add_file_to_directory(file_path: file_path, file_size: file_size)
+        fs_entry.addFileToDirectory(file_path: file_path, file_size: file_size)
         //print(file_path, fs_entry)
     }
 
 }
 print("----")
 print(root.debugDescription)
+
+
+var directorySizes: [FilePath : Int] = [:]
+root.collectDirectorySize(directorySizes: &directorySizes)
+print(directorySizes)
