@@ -53,9 +53,7 @@ class FSEntry {
             case .Directory:
                 var size = 0
                 for c in self.children {
-                    print("[D011] \(self.path) \(size)")
                     size += c.computeSize()
-                    print("[D012] \(self.path) \(size)")
                 }
                 return size
         }
@@ -65,7 +63,6 @@ class FSEntry {
        switch (self.kind) {
            case .Directory:
                directorySizes[self.path] = self.computeSize() 
-               print("[D010] \(self.path) \(directorySizes[self.path]!)")
                for c in self.children {
                    c.collectDirectorySize(directorySizes: &directorySizes)
                }
@@ -83,7 +80,7 @@ class FSEntry {
     }
 
     func printDebug(spaces: Int) {
-        print(String(repeating: " ", count: spaces) + "- \(kind) \(path)\n")
+        print(String(repeating: " ", count: spaces) + "- \(kind) \(path)")
         for c in children {
             c.printDebug(spaces: spaces + 2)
         }
@@ -114,8 +111,6 @@ for line in lines {
             let dir : FilePath = cwd.path.appending(String(arg))
             cwd = cwd.cdAndMaybeMkdir(path: dir)
             precondition(cwd.isDirectory(), cwd.debugDescription)
-
-            print("[D003] \(dir) \(cwd.path)")
            }
        } 
     }  else if (line.starts(with: "dir")) { // Output of `ls`, dir
@@ -123,10 +118,8 @@ for line in lines {
     } else { //  Output of `ls`, file
         let file_size = Int(parts.first!) ?? 0
         let file_name = parts.last!
-        print("[D004] \(file_name) \(file_size)")
         
         let file_path = cwd.path.appending(String(file_name))
-        print("[D005] \(cwd.path) \(file_path)")
 
         cwd.addFileToDirectory(file_path: file_path, file_size: file_size)
     }
@@ -136,6 +129,6 @@ print("----")
 root.printDebug(spaces: 0)
 
 
-// var directorySizes: [FilePath : Int] = [:]
-// root.collectDirectorySize(directorySizes: &directorySizes)
-// print(directorySizes)
+var directorySizes: [FilePath : Int] = [:]
+root.collectDirectorySize(directorySizes: &directorySizes)
+print(directorySizes)
