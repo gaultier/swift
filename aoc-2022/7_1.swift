@@ -137,3 +137,9 @@ var directorySizes: [FilePath : Int] = [:]
 root.collectDirectorySize(directorySizes: &directorySizes)
 print(directorySizes)
 
+let top_sizes = directorySizes.values.filter({s in s <= 100000})
+var sum = 0
+for s in top_sizes {
+    sum += s
+}
+print(top_sizes, sum)
