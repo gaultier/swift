@@ -14,7 +14,7 @@ enum Play: UInt {
 
 enum Outcome: UInt {
   case iLose = 0
-  case Draw = 3
+  case draw = 3
   case iWin = 6
 }
 
@@ -36,7 +36,7 @@ for line in lines {
   var outcome: Outcome = .iLose
   switch plays[1] {
   case "X": outcome = .iLose
-  case "Y": outcome = .Draw
+  case "Y": outcome = .draw
   case "Z": outcome = .iWin
   default:
     precondition(false, "Expected X|Y|Z, got: \(plays[1])")
@@ -44,7 +44,7 @@ for line in lines {
 
   var myPlay: Play = .rock
   switch (theirPlay, outcome) {
-  case (_, .Draw): myPlay = theirPlay
+  case (_, .draw): myPlay = theirPlay
   case (.rock, .iWin): myPlay = .paper
   case (.paper, .iWin): myPlay = .scissor
   case (.scissor, .iWin): myPlay = .rock

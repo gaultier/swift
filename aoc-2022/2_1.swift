@@ -38,7 +38,7 @@ for line in lines {
 
   var playScore: UInt = 0
   switch (theirPlay, myPlay) {
-  case (_, _) where theirPlay == myPlay: playScore = 3  // Draw
+  case (_, _) where theirPlay == myPlay: playScore = 3  // draw
   case (.rock, .paper), (.paper, .scissor), (.scissor, .rock): playScore = 6  // Win for me
   default: do {}  // Loss for me
   }

@@ -11,7 +11,7 @@ struct file {
 
 enum FSEntryKind {
   case file(Int)
-  case Directory
+  case directory
 }
 
 class FSEntry {
@@ -27,7 +27,7 @@ class FSEntry {
     self.parent = parent
   }
 
-  func addfileToDirectory(filePath: filePath, fileSize: Int) {
+  func addfileTodirectory(filePath: filePath, fileSize: Int) {
     children.append(FSEntry(kind: FSEntryKind.file(fileSize), path: filePath, parent: self))
   }
 
@@ -42,7 +42,7 @@ class FSEntry {
     }
 
     // mkdir
-    children.append(FSEntry(kind: FSEntryKind.Directory, path: path, parent: self))
+    children.append(FSEntry(kind: FSEntryKind.directory, path: path, parent: self))
     return children.last!
   }
 
@@ -50,7 +50,7 @@ class FSEntry {
     switch self.kind {
     case .file(let fileSize):
       return fileSize
-    case .Directory:
+    case .directory:
       var size = 0
       for c in self.children {
         size += c.computeSize()
@@ -59,20 +59,20 @@ class FSEntry {
     }
   }
 
-  func collectDirectorySize(directorySizes: inout [Int]) {
+  func collectdirectorySize(directorySizes: inout [Int]) {
     switch self.kind {
-    case .Directory:
+    case .directory:
       directorySizes.append(self.computeSize())
       for c in self.children {
-        c.collectDirectorySize(directorySizes: &directorySizes)
+        c.collectdirectorySize(directorySizes: &directorySizes)
       }
     default: do {}
     }
   }
 
-  func isDirectory() -> Bool {
+  func isdirectory() -> Bool {
     switch self.kind {
-    case .Directory:
+    case .directory:
       return true
     default:
       return false
@@ -84,11 +84,11 @@ class FSEntry {
 var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
-var cwd = FSEntry(kind: FSEntryKind.Directory, path: "/", parent: nil)
+var cwd = FSEntry(kind: FSEntryKind.directory, path: "/", parent: nil)
 let root = cwd
 
 for line in lines {
-  precondition(cwd.isDirectory(), cwd.path.debugDescription)
+  precondition(cwd.isdirectory(), cwd.path.debugDescription)
 
   let parts = line.split(separator: " ")
   if line.starts(with: "$ ") {  // Command
@@ -101,7 +101,7 @@ for line in lines {
       } else {
         let dir: filePath = cwd.path.appending(String(arg))
         cwd = cwd.cdAndMaybeMkdir(path: dir)
-        precondition(cwd.isDirectory(), cwd.path.debugDescription)
+        precondition(cwd.isdirectory(), cwd.path.debugDescription)
       }
     }
   } else if line.starts(with: "dir") {  // Output of `ls`, dir
@@ -112,12 +112,12 @@ for line in lines {
 
     let filePath = cwd.path.appending(String(fileName))
 
-    cwd.addfileToDirectory(filePath: filePath, fileSize: fileSize)
+    cwd.addfileTodirectory(filePath: filePath, fileSize: fileSize)
   }
 
 }
 var directorySizes: [Int] = []
-root.collectDirectorySize(directorySizes: &directorySizes)
+root.collectdirectorySize(directorySizes: &directorySizes)
 let occupiedSpace = directorySizes[0]  // root
 directorySizes.sort()
 
