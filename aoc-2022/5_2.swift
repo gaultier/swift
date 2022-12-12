@@ -6,7 +6,7 @@ struct Move {
   let to: Int
 }
 
-var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
 var stacks: [[Character]] = [[]]
@@ -53,8 +53,8 @@ for (_, line) in lines.enumerated() {
 }
 
 for move in moves {
-  let to_move = stacks[move.from].suffix(move.count)
-  stacks[move.to].append(contentsOf: to_move)
+  let toMove = stacks[move.from].suffix(move.count)
+  stacks[move.to].append(contentsOf: toMove)
   stacks[move.from] = stacks[move.from].dropLast(move.count)
 }
 

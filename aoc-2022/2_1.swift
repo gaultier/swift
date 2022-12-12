@@ -1,12 +1,12 @@
 import Foundation
 
-let input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+let input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n", omittingEmptySubsequences: false)
 
 enum Play: UInt {
-  case Rock = 1
-  case Paper = 2
-  case Scissor = 3
+  case rock = 1
+  case paper = 2
+  case scissor = 3
   func score() -> UInt {
     return rawValue
   }
@@ -18,20 +18,20 @@ for line in lines {
   if plays.isEmpty { break }
   precondition(plays.count == 2, String(plays.count))
 
-  var theirPlay: Play = .Rock
+  var theirPlay: Play = .rock
   switch plays[0] {
-  case "A": theirPlay = .Rock
-  case "B": theirPlay = .Paper
-  case "C": theirPlay = .Scissor
+  case "A": theirPlay = .rock
+  case "B": theirPlay = .paper
+  case "C": theirPlay = .scissor
   default:
     precondition(false, "Expected A|B|C, got: \(plays[0])")
   }
 
-  var myPlay: Play = .Rock
+  var myPlay: Play = .rock
   switch plays[1] {
-  case "X": myPlay = .Rock
-  case "Y": myPlay = .Paper
-  case "Z": myPlay = .Scissor
+  case "X": myPlay = .rock
+  case "Y": myPlay = .paper
+  case "Z": myPlay = .scissor
   default:
     precondition(false, "Expected X|Y|Z, got: \(plays[1])")
   }
@@ -39,7 +39,7 @@ for line in lines {
   var playScore: UInt = 0
   switch (theirPlay, myPlay) {
   case (_, _) where theirPlay == myPlay: playScore = 3  // Draw
-  case (.Rock, .Paper), (.Paper, .Scissor), (.Scissor, .Rock): playScore = 6  // Win for me
+  case (.rock, .paper), (.paper, .scissor), (.scissor, .rock): playScore = 6  // Win for me
   default: do {}  // Loss for me
   }
   let roundScore = myPlay.score() + playScore

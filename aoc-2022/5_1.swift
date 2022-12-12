@@ -6,7 +6,7 @@ struct Move {
   let to: Int
 }
 
-var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
 var stacks: [[Character]] = [[]]

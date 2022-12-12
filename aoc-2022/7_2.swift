@@ -4,34 +4,34 @@ import System
 let availableSpace = 70_000_000
 let targetFreeSpace = 30_000_000
 
-struct File {
-  let path: FilePath
+struct file {
+  let path: filePath
   let size: Int
 }
 
 enum FSEntryKind {
-  case File(Int)
+  case file(Int)
   case Directory
 }
 
 class FSEntry {
   let kind: FSEntryKind
-  let path: FilePath
+  let path: filePath
   var children: [FSEntry]
   let parent: FSEntry?
 
-  init(kind: FSEntryKind, path: FilePath, parent: FSEntry?) {
+  init(kind: FSEntryKind, path: filePath, parent: FSEntry?) {
     self.kind = kind
     self.path = path
     self.children = []
     self.parent = parent
   }
 
-  func addFileToDirectory(filePath: FilePath, fileSize: Int) {
-    children.append(FSEntry(kind: FSEntryKind.File(fileSize), path: filePath, parent: self))
+  func addfileToDirectory(filePath: filePath, fileSize: Int) {
+    children.append(FSEntry(kind: FSEntryKind.file(fileSize), path: filePath, parent: self))
   }
 
-  func cdAndMaybeMkdir(path: FilePath) -> FSEntry {
+  func cdAndMaybeMkdir(path: filePath) -> FSEntry {
     if path == "/" && self.path == "/" {
       return self
     }
@@ -48,7 +48,7 @@ class FSEntry {
 
   func computeSize() -> Int {
     switch self.kind {
-    case .File(let fileSize):
+    case .file(let fileSize):
       return fileSize
     case .Directory:
       var size = 0
@@ -81,7 +81,7 @@ class FSEntry {
 
 }
 
-var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
 var cwd = FSEntry(kind: FSEntryKind.Directory, path: "/", parent: nil)
@@ -99,7 +99,7 @@ for line in lines {
       if arg == ".." {
         cwd = cwd.parent!
       } else {
-        let dir: FilePath = cwd.path.appending(String(arg))
+        let dir: filePath = cwd.path.appending(String(arg))
         cwd = cwd.cdAndMaybeMkdir(path: dir)
         precondition(cwd.isDirectory(), cwd.path.debugDescription)
       }
@@ -112,7 +112,7 @@ for line in lines {
 
     let filePath = cwd.path.appending(String(fileName))
 
-    cwd.addFileToDirectory(filePath: filePath, fileSize: fileSize)
+    cwd.addfileToDirectory(filePath: filePath, fileSize: fileSize)
   }
 
 }
