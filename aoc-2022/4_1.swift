@@ -13,16 +13,16 @@ for line in lines {
 
   let leftParts = left.split(separator: "-")
   precondition(leftParts.count == 2)
-  let left_start = UInt(leftParts[0]) ?? 0
+  let leftStart = UInt(leftParts[0]) ?? 0
   let leftend = UInt(leftParts[1]) ?? 0
 
   let rightParts = right.split(separator: "-")
   precondition(rightParts.count == 2)
-  let right_start = UInt(rightParts[0]) ?? 0
+  let rightStart = UInt(rightParts[0]) ?? 0
   let rightend = UInt(rightParts[1]) ?? 0
 
-  if (left_start <= right_start && rightend <= leftend)
-    || (right_start <= left_start && leftend <= rightend)
+  if (leftStart <= rightStart && rightend <= leftend)
+    || (rightStart <= leftStart && leftend <= rightend)
   {
     countEnclosing += 1
   }
