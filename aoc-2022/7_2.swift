@@ -5,7 +5,7 @@ let availableSpace = 70_000_000
 let targetFreeSpace = 30_000_000
 
 struct file {
-  let path: filePath
+  let path: FilePath
   let size: Int
 }
 
@@ -16,22 +16,22 @@ enum FSEntryKind {
 
 class FSEntry {
   let kind: FSEntryKind
-  let path: filePath
+  let path: FilePath
   var children: [FSEntry]
   let parent: FSEntry?
 
-  init(kind: FSEntryKind, path: filePath, parent: FSEntry?) {
+  init(kind: FSEntryKind, path: FilePath, parent: FSEntry?) {
     self.kind = kind
     self.path = path
     self.children = []
     self.parent = parent
   }
 
-  func addfileTodirectory(filePath: filePath, fileSize: Int) {
+  func addfileTodirectory(filePath: FilePath, fileSize: Int) {
     children.append(FSEntry(kind: FSEntryKind.file(fileSize), path: filePath, parent: self))
   }
 
-  func cdAndMaybeMkdir(path: filePath) -> FSEntry {
+  func cdAndMaybeMkdir(path: FilePath) -> FSEntry {
     if path == "/" && self.path == "/" {
       return self
     }
@@ -99,7 +99,7 @@ for line in lines {
       if arg == ".." {
         cwd = cwd.parent!
       } else {
-        let dir: filePath = cwd.path.appending(String(arg))
+        let dir: FilePath = cwd.path.appending(String(arg))
         cwd = cwd.cdAndMaybeMkdir(path: dir)
         precondition(cwd.isdirectory(), cwd.path.debugDescription)
       }
