@@ -1,6 +1,6 @@
 import Foundation
 
-var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 
 for i in 1...(input.count - 14) {
   let index = input.index(input.startIndex, offsetBy: i)

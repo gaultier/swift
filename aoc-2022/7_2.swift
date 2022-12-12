@@ -81,7 +81,7 @@ class FSEntry {
 
 }
 
-var input = try! String(contentsOffile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
+var input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
 var cwd = FSEntry(kind: FSEntryKind.directory, path: "/", parent: nil)
