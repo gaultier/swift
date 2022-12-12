@@ -15,15 +15,15 @@ for line in lines {
   precondition(left_parts.count == 2)
   let left_start = UInt(left_parts[0]) ?? 0
   let leftend = UInt(left_parts[1]) ?? 0
-  let left_range = left_start...leftend
+  let leftRange = left_start...leftend
 
   let right_parts = right.split(separator: "-")
   precondition(right_parts.count == 2)
   let right_start = UInt(right_parts[0]) ?? 0
   let rightend = UInt(right_parts[1]) ?? 0
-  let right_range = right_start...rightend
+  let rightRange = right_start...rightend
 
-  if left_range.overlaps(right_range) {
+  if leftRange.overlaps(rightRange) {
     count_enclosing += 1
   }
 }

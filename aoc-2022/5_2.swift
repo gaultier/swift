@@ -26,7 +26,7 @@ for (_, line) in lines.enumerated() {
       let crateEnd = remaining[crateBegin!...].firstIndex(of: "]")!
       let crate = remaining[crateBegin!..<crateEnd]
 
-      let crate_name = crate.dropFirst()
+      let crateName = crate.dropFirst()
       let column = line[...crateBegin!].count / 4
 
       if stacks.count <= column {
@@ -35,7 +35,7 @@ for (_, line) in lines.enumerated() {
         }
       }
       precondition(column < stacks.count, "\(column) \(stacks.count)")
-      stacks[column].insert(crate_name.first!, at: 0)
+      stacks[column].insert(crateName.first!, at: 0)
 
       remaining = remaining[crateEnd...].dropFirst()
     }
@@ -43,12 +43,12 @@ for (_, line) in lines.enumerated() {
     let parts = line.split(separator: " ")
     precondition(parts.count == 6, parts.description)
 
-    let crates_count = Int(parts[1]) ?? 0
+    let cratesCount = Int(parts[1]) ?? 0
     // 1-indexed
     let from = (Int(parts[3]) ?? 0) - 1
     let to = (Int(parts[5]) ?? 0) - 1
 
-    moves.append(Move(count: crates_count, from: from, to: to))
+    moves.append(Move(count: cratesCount, from: from, to: to))
   }
 }
 

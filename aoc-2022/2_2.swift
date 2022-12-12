@@ -18,7 +18,7 @@ enum Outcome: UInt {
   case I_Win = 6
 }
 
-var total_score: UInt = 0
+var totalScore: UInt = 0
 for line in lines {
   let plays = line.split(separator: " ")
   if plays.isEmpty { break }
@@ -53,10 +53,10 @@ for line in lines {
   case (.Scissor, .I_Lose): my_play = .Paper
   }
 
-  let play_score: UInt = outcome.rawValue
+  let playScore: UInt = outcome.rawValue
 
-  let round_score = my_play.score() + play_score
+  let roundScore = my_play.score() + playScore
 
-  total_score += round_score
+  totalScore += roundScore
 }
-print(total_score)
+print(totalScore)

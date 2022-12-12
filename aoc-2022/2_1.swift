@@ -12,7 +12,7 @@ enum Play: UInt {
   }
 }
 
-var total_score: UInt = 0
+var totalScore: UInt = 0
 for line in lines {
   let plays = line.split(separator: " ")
   if plays.isEmpty { break }
@@ -36,14 +36,14 @@ for line in lines {
     precondition(false, "Expected X|Y|Z, got: \(plays[1])")
   }
 
-  var play_score: UInt = 0
+  var playScore: UInt = 0
   switch (their_play, my_play) {
-  case (_, _) where their_play == my_play: play_score = 3  // Draw
-  case (.Rock, .Paper), (.Paper, .Scissor), (.Scissor, .Rock): play_score = 6  // Win for me
+  case (_, _) where their_play == my_play: playScore = 3  // Draw
+  case (.Rock, .Paper), (.Paper, .Scissor), (.Scissor, .Rock): playScore = 6  // Win for me
   default: do {}  // Loss for me
   }
-  let round_score = my_play.score() + play_score
+  let roundScore = my_play.score() + playScore
 
-  total_score += round_score
+  totalScore += roundScore
 }
-print(total_score)
+print(totalScore)

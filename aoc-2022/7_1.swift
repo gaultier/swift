@@ -105,9 +105,9 @@ for line in lines {
     // No-op
   } else {  //  Output of `ls`, file
     let fileSize = Int(parts.first!) ?? 0
-    let file_name = parts.last!
+    let fileName = parts.last!
 
-    let filePath = cwd.path.appending(String(file_name))
+    let filePath = cwd.path.appending(String(fileName))
 
     cwd.addFileToDirectory(filePath: filePath, fileSize: fileSize)
   }
