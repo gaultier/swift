@@ -14,15 +14,15 @@ for line in lines {
   let left_parts = left.split(separator: "-")
   precondition(left_parts.count == 2)
   let left_start = UInt(left_parts[0]) ?? 0
-  let left_end = UInt(left_parts[1]) ?? 0
+  let leftend = UInt(left_parts[1]) ?? 0
 
   let right_parts = right.split(separator: "-")
   precondition(right_parts.count == 2)
   let right_start = UInt(right_parts[0]) ?? 0
-  let right_end = UInt(right_parts[1]) ?? 0
+  let rightend = UInt(right_parts[1]) ?? 0
 
-  if (left_start <= right_start && right_end <= left_end)
-    || (right_start <= left_start && left_end <= right_end)
+  if (left_start <= right_start && rightend <= leftend)
+    || (right_start <= left_start && leftend <= rightend)
   {
     count_enclosing += 1
   }

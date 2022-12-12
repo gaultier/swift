@@ -24,8 +24,8 @@ class FSEntry {
     self.parent = parent
   }
 
-  func addFileToDirectory(file_path: FilePath, file_size: Int) {
-    children.append(FSEntry(kind: FSEntryKind.File(file_size), path: file_path, parent: self))
+  func addFileToDirectory(filePath: FilePath, fileSize: Int) {
+    children.append(FSEntry(kind: FSEntryKind.File(fileSize), path: filePath, parent: self))
   }
 
   func cdAndMaybeMkdir(path: FilePath) -> FSEntry {
@@ -45,8 +45,8 @@ class FSEntry {
 
   func computeSize() -> Int {
     switch self.kind {
-    case .File(let file_size):
-      return file_size
+    case .File(let fileSize):
+      return fileSize
     case .Directory:
       var size = 0
       for c in self.children {
@@ -104,12 +104,12 @@ for line in lines {
   } else if line.starts(with: "dir") {  // Output of `ls`, dir
     // No-op
   } else {  //  Output of `ls`, file
-    let file_size = Int(parts.first!) ?? 0
+    let fileSize = Int(parts.first!) ?? 0
     let file_name = parts.last!
 
-    let file_path = cwd.path.appending(String(file_name))
+    let filePath = cwd.path.appending(String(file_name))
 
-    cwd.addFileToDirectory(file_path: file_path, file_size: file_size)
+    cwd.addFileToDirectory(filePath: filePath, fileSize: fileSize)
   }
 
 }

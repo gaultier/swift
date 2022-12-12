@@ -20,14 +20,14 @@ for (_, line) in lines.enumerated() {
     var remaining = line
 
     while true {
-      let crate_begin = remaining.firstIndex(of: "[")
-      if crate_begin == nil { break }
+      let crateBegin = remaining.firstIndex(of: "[")
+      if crateBegin == nil { break }
 
-      let crate_end = remaining[crate_begin!...].firstIndex(of: "]")!
-      let crate = remaining[crate_begin!..<crate_end]
+      let crateEnd = remaining[crateBegin!...].firstIndex(of: "]")!
+      let crate = remaining[crateBegin!..<crateEnd]
 
       let crate_name = crate.dropFirst()
-      let column = line[...crate_begin!].count / 4
+      let column = line[...crateBegin!].count / 4
 
       if stacks.count <= column {
         for _ in 0...column - stacks.count {
@@ -37,7 +37,7 @@ for (_, line) in lines.enumerated() {
       precondition(column < stacks.count, "\(column) \(stacks.count)")
       stacks[column].insert(crate_name.first!, at: 0)
 
-      remaining = remaining[crate_end...].dropFirst()
+      remaining = remaining[crateEnd...].dropFirst()
     }
   } else if line.starts(with: "move") {  // Moves
     let parts = line.split(separator: " ")
