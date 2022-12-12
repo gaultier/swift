@@ -18,31 +18,31 @@ for line in lines {
   if plays.isEmpty { break }
   precondition(plays.count == 2, String(plays.count))
 
-  var their_play: Play = .Rock
+  var theirPlay: Play = .Rock
   switch plays[0] {
-  case "A": their_play = .Rock
-  case "B": their_play = .Paper
-  case "C": their_play = .Scissor
+  case "A": theirPlay = .Rock
+  case "B": theirPlay = .Paper
+  case "C": theirPlay = .Scissor
   default:
     precondition(false, "Expected A|B|C, got: \(plays[0])")
   }
 
-  var my_play: Play = .Rock
+  var myPlay: Play = .Rock
   switch plays[1] {
-  case "X": my_play = .Rock
-  case "Y": my_play = .Paper
-  case "Z": my_play = .Scissor
+  case "X": myPlay = .Rock
+  case "Y": myPlay = .Paper
+  case "Z": myPlay = .Scissor
   default:
     precondition(false, "Expected X|Y|Z, got: \(plays[1])")
   }
 
   var playScore: UInt = 0
-  switch (their_play, my_play) {
-  case (_, _) where their_play == my_play: playScore = 3  // Draw
+  switch (theirPlay, myPlay) {
+  case (_, _) where theirPlay == myPlay: playScore = 3  // Draw
   case (.Rock, .Paper), (.Paper, .Scissor), (.Scissor, .Rock): playScore = 6  // Win for me
   default: do {}  // Loss for me
   }
-  let roundScore = my_play.score() + playScore
+  let roundScore = myPlay.score() + playScore
 
   totalScore += roundScore
 }

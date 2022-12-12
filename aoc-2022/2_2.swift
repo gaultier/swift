@@ -24,11 +24,11 @@ for line in lines {
   if plays.isEmpty { break }
   precondition(plays.count == 2, String(plays.count))
 
-  var their_play: Play = .Rock
+  var theirPlay: Play = .Rock
   switch plays[0] {
-  case "A": their_play = .Rock
-  case "B": their_play = .Paper
-  case "C": their_play = .Scissor
+  case "A": theirPlay = .Rock
+  case "B": theirPlay = .Paper
+  case "C": theirPlay = .Scissor
   default:
     precondition(false, "Expected A|B|C, got: \(plays[0])")
   }
@@ -42,20 +42,20 @@ for line in lines {
     precondition(false, "Expected X|Y|Z, got: \(plays[1])")
   }
 
-  var my_play: Play = .Rock
-  switch (their_play, outcome) {
-  case (_, .Draw): my_play = their_play
-  case (.Rock, .I_Win): my_play = .Paper
-  case (.Paper, .I_Win): my_play = .Scissor
-  case (.Scissor, .I_Win): my_play = .Rock
-  case (.Rock, .I_Lose): my_play = .Scissor
-  case (.Paper, .I_Lose): my_play = .Rock
-  case (.Scissor, .I_Lose): my_play = .Paper
+  var myPlay: Play = .Rock
+  switch (theirPlay, outcome) {
+  case (_, .Draw): myPlay = theirPlay
+  case (.Rock, .I_Win): myPlay = .Paper
+  case (.Paper, .I_Win): myPlay = .Scissor
+  case (.Scissor, .I_Win): myPlay = .Rock
+  case (.Rock, .I_Lose): myPlay = .Scissor
+  case (.Paper, .I_Lose): myPlay = .Rock
+  case (.Scissor, .I_Lose): myPlay = .Paper
   }
 
   let playScore: UInt = outcome.rawValue
 
-  let roundScore = my_play.score() + playScore
+  let roundScore = myPlay.score() + playScore
 
   totalScore += roundScore
 }

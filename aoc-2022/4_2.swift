@@ -3,7 +3,7 @@ import Foundation
 let input = try! String(contentsOfFile: CommandLine.arguments[1], encoding: String.Encoding.utf8)
 let lines = input.split(separator: "\n")
 
-var count_enclosing: UInt = 0
+var countEnclosing: UInt = 0
 for line in lines {
   let pair = line.split(separator: ",")
   precondition(pair.count == 2, String(line))
@@ -11,20 +11,20 @@ for line in lines {
   let left = pair[0]
   let right = pair[1]
 
-  let left_parts = left.split(separator: "-")
-  precondition(left_parts.count == 2)
-  let left_start = UInt(left_parts[0]) ?? 0
-  let leftend = UInt(left_parts[1]) ?? 0
+  let leftParts = left.split(separator: "-")
+  precondition(leftParts.count == 2)
+  let left_start = UInt(leftParts[0]) ?? 0
+  let leftend = UInt(leftParts[1]) ?? 0
   let leftRange = left_start...leftend
 
-  let right_parts = right.split(separator: "-")
-  precondition(right_parts.count == 2)
-  let right_start = UInt(right_parts[0]) ?? 0
-  let rightend = UInt(right_parts[1]) ?? 0
+  let rightParts = right.split(separator: "-")
+  precondition(rightParts.count == 2)
+  let right_start = UInt(rightParts[0]) ?? 0
+  let rightend = UInt(rightParts[1]) ?? 0
   let rightRange = right_start...rightend
 
   if leftRange.overlaps(rightRange) {
-    count_enclosing += 1
+    countEnclosing += 1
   }
 }
-print(count_enclosing)
+print(countEnclosing)
