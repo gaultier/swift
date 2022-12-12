@@ -70,7 +70,7 @@ class FSEntry {
     }
   }
 
-  func isdirectory() -> Bool {
+  func isDirectory() -> Bool {
     switch self.kind {
     case .directory:
       return true
@@ -88,7 +88,7 @@ var cwd = FSEntry(kind: FSEntryKind.directory, path: "/", parent: nil)
 let root = cwd
 
 for line in lines {
-  precondition(cwd.isdirectory(), cwd.path.debugDescription)
+  precondition(cwd.isDirectory(), cwd.path.debugDescription)
 
   let parts = line.split(separator: " ")
   if line.starts(with: "$ ") {  // Command
@@ -101,7 +101,7 @@ for line in lines {
       } else {
         let dir: FilePath = cwd.path.appending(String(arg))
         cwd = cwd.cdAndMaybeMkdir(path: dir)
-        precondition(cwd.isdirectory(), cwd.path.debugDescription)
+        precondition(cwd.isDirectory(), cwd.path.debugDescription)
       }
     }
   } else if line.starts(with: "dir") {  // Output of `ls`, dir
