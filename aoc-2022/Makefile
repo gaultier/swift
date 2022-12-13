@@ -49,6 +49,9 @@ SWIFT_FLAGS := -g -O
 8_1: 8_1.swift
 	swiftc $^ $(SWIFT_FLAGS)
 
-all: 1_1 1_2 2_1 2_2 3_1 3_2 4_1 4_2 5_1 5_2 6_1 6_2 7_1 7_2 8_1
+8_2: 8_2.swift
+	swiftc $^ $(SWIFT_FLAGS)
+
+all: 1_1 1_2 2_1 2_2 3_1 3_2 4_1 4_2 5_1 5_2 6_1 6_2 7_1 7_2 8_1 8_2
 
 .PHONY: all
