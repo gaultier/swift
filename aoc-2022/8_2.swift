@@ -23,10 +23,7 @@ for y in 0..<height {
         break
       }
     }
-    if score > 1 {
-      scores[y][x] *= score
-      print("[D001]", x, y, score, scores[y][x])
-    }
+    scores[y][x] *= score
     score = 0
 
     // To the left
@@ -39,10 +36,7 @@ for y in 0..<height {
       }
 
     }
-    if score > 1 {
-      scores[y][x] *= score
-      print("[D002]", x, y, score, scores[y][x])
-    }
+    scores[y][x] *= score
     score = 0
 
     // Downwards
@@ -54,10 +48,7 @@ for y in 0..<height {
       }
 
     }
-    if score > 1 {
-      scores[y][x] *= score
-      print("[D003]", x, y, score, scores[y][x])
-    }
+    scores[y][x] *= score
     score = 0
 
     // Upwards
@@ -69,10 +60,18 @@ for y in 0..<height {
         break
       }
     }
-    if score > 1 {
-      scores[y][x] *= score
-      print("[D004]", x, y, score, scores[y][x])
+    scores[y][x] *= score
+  }
+}
+
+print(scores)
+
+var max = 0
+for row in scores {
+  for score in row {
+    if max < score {
+      max = score
     }
   }
 }
-print(scores)
+print(max)
