@@ -23,21 +23,22 @@ func rayTrace() {
       let cell = lines[y][x]
       if cell > maxRow {
         visible[y][x] |= visibleLeft
+        maxRow = cell
       }
-
-      maxRow = cell
     }
   }
 
-  for y in 0..<height {
+  for i in 0..<height {
     var maxRow = UInt8(0)
-    for x in 0..<width {
-      let cell = lines[y][width - 1 - x]
+    for j in 0..<width {
+      let x = width - 1 - j
+      let y = i
+      let cell = lines[y][x]
       if cell > maxRow {
+        print("[D003]", x, y, cell, maxRow)
         visible[y][x] |= visibleRight
+        maxRow = cell
       }
-
-      maxRow = cell
     }
   }
 
@@ -47,24 +48,36 @@ func rayTrace() {
       let cell = lines[y][x]
       if cell > maxCol {
         visible[y][x] |= visibleTop
-      }
 
-      maxCol = cell
+        maxCol = cell
+      }
     }
   }
 
-  for x in 0..<width {
+  for i in 0..<width {
     var maxCol = UInt8(0)
-    for y in 0..<height {
-      let cell = lines[height - 1 - y][x]
+    for j in 0..<height {
+      let x = i
+      let y = height - 1 - j
+      let cell = lines[y][x]
       if cell > maxCol {
         visible[y][x] |= visibleBottom
-      }
 
-      maxCol = cell
+        maxCol = cell
+      }
     }
   }
 }
 rayTrace()
 
 print(visible)
+
+var sum = 0
+for y in 0..<height {
+    for x in 0..<width {
+        if (visible[y][x] > 0) {
+            sum += 1
+        }
+    }
+}
+print(sum)
