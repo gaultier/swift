@@ -7,7 +7,6 @@ data.getBytes(&input, length: data.length)
 let lines = [[UInt8]](input.split(separator: 0x0a).map({ l in [UInt8](l) }))
 let width = lines.first!.count
 let height = lines.count
-print(width, height, lines, lines[3][2])
 
 var visible = [[UInt8]](repeating: [UInt8](repeating: 0, count: width), count: height)
 
