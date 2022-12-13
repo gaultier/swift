@@ -8,67 +8,71 @@ let lines = [[UInt8]](input.split(separator: 0x0a).map({ l in [UInt8](l) }))
 let width = lines.first!.count
 let height = lines.count
 
-var visible = [[UInt8]](repeating: [UInt8](repeating: 0, count: width), count: height)
+var scores = [[Int]](repeating: [Int](repeating: 1, count: width), count: height)
 
-// Raytrace each row from the left
-for y in 0..<height {
-  var maxRow = UInt8(0)
-  for x in 0..<width {
-    let cell = lines[y][x]
-    if cell > maxRow {
-      visible[y][x] |= 1
-      maxRow = cell
-    }
-  }
-}
-
-// Raytrace each row from the right
-for i in 0..<height {
-  var maxRow = UInt8(0)
-  for j in 0..<width {
-    let x = width - 1 - j
-    let y = i
-    let cell = lines[y][x]
-    if cell > maxRow {
-      visible[y][x] |= 1
-      maxRow = cell
-    }
-  }
-}
-
-// Raytrace each column from the top
-for x in 0..<width {
-  var maxCol = UInt8(0)
-  for y in 0..<height {
-    let cell = lines[y][x]
-    if cell > maxCol {
-      visible[y][x] |= 1
-
-      maxCol = cell
-    }
-  }
-}
-
-// Raytrace each column from the bottom
-for i in 0..<width {
-  var maxCol = UInt8(0)
-  for j in 0..<height {
-    let x = i
-    let y = height - 1 - j
-    let cell = lines[y][x]
-    if cell > maxCol {
-      visible[y][x] |= 1
-
-      maxCol = cell
-    }
-  }
-}
-
-var sum = 0
 for y in 0..<height {
   for x in 0..<width {
-    sum += Int(visible[y][x])
+    let mainCell = lines[y][x]
+
+    var score = 0
+    // To the right
+    for j in (x + 1)..<width {
+      let otherCell = lines[y][j]
+      score += 1
+      if otherCell >= mainCell {
+        break
+      }
+    }
+    if score > 1 {
+      scores[y][x] *= score
+      print("[D001]", x, y, score, scores[y][x])
+    }
+    score = 0
+
+    // To the left
+    for j in 0..<x {
+      let otherX = x - 1 - j
+      let otherCell = lines[y][otherX]
+      score += 1
+      if otherCell >= mainCell {
+        break
+      }
+
+    }
+    if score > 1 {
+      scores[y][x] *= score
+      print("[D002]", x, y, score, scores[y][x])
+    }
+    score = 0
+
+    // Downwards
+    for i in (y + 1)..<height {
+      let otherCell = lines[i][x]
+      score += 1
+      if otherCell >= mainCell {
+        break
+      }
+
+    }
+    if score > 1 {
+      scores[y][x] *= score
+      print("[D003]", x, y, score, scores[y][x])
+    }
+    score = 0
+
+    // Upwards
+    for i in 0..<y {
+      let otherY = y - 1 - i
+      let otherCell = lines[otherY][x]
+      score += 1
+      if otherCell >= mainCell {
+        break
+      }
+    }
+    if score > 1 {
+      scores[y][x] *= score
+      print("[D004]", x, y, score, scores[y][x])
+    }
   }
 }
-print(sum)
-
+print(scores)
