@@ -36,7 +36,6 @@ for i in 0..<height {
     let y = i
     let cell = lines[y][x]
     if cell > maxRow {
-      print("[D003]", x, y, cell, maxRow)
       visible[y][x] |= visibleRight
       maxRow = cell
     }
