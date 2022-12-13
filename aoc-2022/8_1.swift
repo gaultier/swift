@@ -16,6 +16,7 @@ let visibleRight = UInt8(0x2)
 let visibleTop = UInt8(0x4)
 let visibleBottom = UInt8(0x8)
 
+// Raytrace each row from the left
 for y in 0..<height {
   var maxRow = UInt8(0)
   for x in 0..<width {
@@ -27,6 +28,7 @@ for y in 0..<height {
   }
 }
 
+// Raytrace each row from the right
 for i in 0..<height {
   var maxRow = UInt8(0)
   for j in 0..<width {
@@ -41,6 +43,7 @@ for i in 0..<height {
   }
 }
 
+// Raytrace each column from the top
 for x in 0..<width {
   var maxCol = UInt8(0)
   for y in 0..<height {
@@ -53,6 +56,7 @@ for x in 0..<width {
   }
 }
 
+// Raytrace each column from the bottom
 for i in 0..<width {
   var maxCol = UInt8(0)
   for j in 0..<height {
