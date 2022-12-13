@@ -16,68 +16,63 @@ let visibleRight = UInt8(0x2)
 let visibleTop = UInt8(0x4)
 let visibleBottom = UInt8(0x8)
 
-func rayTrace() {
-  for y in 0..<height {
-    var maxRow = UInt8(0)
-    for x in 0..<width {
-      let cell = lines[y][x]
-      if cell > maxRow {
-        visible[y][x] |= visibleLeft
-        maxRow = cell
-      }
-    }
-  }
-
-  for i in 0..<height {
-    var maxRow = UInt8(0)
-    for j in 0..<width {
-      let x = width - 1 - j
-      let y = i
-      let cell = lines[y][x]
-      if cell > maxRow {
-        print("[D003]", x, y, cell, maxRow)
-        visible[y][x] |= visibleRight
-        maxRow = cell
-      }
-    }
-  }
-
+for y in 0..<height {
+  var maxRow = UInt8(0)
   for x in 0..<width {
-    var maxCol = UInt8(0)
-    for y in 0..<height {
-      let cell = lines[y][x]
-      if cell > maxCol {
-        visible[y][x] |= visibleTop
-
-        maxCol = cell
-      }
-    }
-  }
-
-  for i in 0..<width {
-    var maxCol = UInt8(0)
-    for j in 0..<height {
-      let x = i
-      let y = height - 1 - j
-      let cell = lines[y][x]
-      if cell > maxCol {
-        visible[y][x] |= visibleBottom
-
-        maxCol = cell
-      }
+    let cell = lines[y][x]
+    if cell > maxRow {
+      visible[y][x] |= visibleLeft
+      maxRow = cell
     }
   }
 }
-rayTrace()
 
-print(visible)
+for i in 0..<height {
+  var maxRow = UInt8(0)
+  for j in 0..<width {
+    let x = width - 1 - j
+    let y = i
+    let cell = lines[y][x]
+    if cell > maxRow {
+      print("[D003]", x, y, cell, maxRow)
+      visible[y][x] |= visibleRight
+      maxRow = cell
+    }
+  }
+}
+
+for x in 0..<width {
+  var maxCol = UInt8(0)
+  for y in 0..<height {
+    let cell = lines[y][x]
+    if cell > maxCol {
+      visible[y][x] |= visibleTop
+
+      maxCol = cell
+    }
+  }
+}
+
+for i in 0..<width {
+  var maxCol = UInt8(0)
+  for j in 0..<height {
+    let x = i
+    let y = height - 1 - j
+    let cell = lines[y][x]
+    if cell > maxCol {
+      visible[y][x] |= visibleBottom
+
+      maxCol = cell
+    }
+  }
+}
 
 var sum = 0
 for y in 0..<height {
-    for x in 0..<width {
-        if (visible[y][x] > 0) {
-            sum += 1
-        }
+  for x in 0..<width {
+    if visible[y][x] > 0 {
+      sum += 1
     }
+  }
 }
 print(sum)
