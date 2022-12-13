@@ -10,18 +10,13 @@ let height = lines.count
 
 var visible = [[UInt8]](repeating: [UInt8](repeating: 0, count: width), count: height)
 
-let visibleLeft = UInt8(0x1)
-let visibleRight = UInt8(0x2)
-let visibleTop = UInt8(0x4)
-let visibleBottom = UInt8(0x8)
-
 // Raytrace each row from the left
 for y in 0..<height {
   var maxRow = UInt8(0)
   for x in 0..<width {
     let cell = lines[y][x]
     if cell > maxRow {
-      visible[y][x] |= visibleLeft
+      visible[y][x] |= 1
       maxRow = cell
     }
   }
@@ -35,7 +30,7 @@ for i in 0..<height {
     let y = i
     let cell = lines[y][x]
     if cell > maxRow {
-      visible[y][x] |= visibleRight
+      visible[y][x] |= 1
       maxRow = cell
     }
   }
@@ -47,7 +42,7 @@ for x in 0..<width {
   for y in 0..<height {
     let cell = lines[y][x]
     if cell > maxCol {
-      visible[y][x] |= visibleTop
+      visible[y][x] |= 1
 
       maxCol = cell
     }
@@ -62,7 +57,7 @@ for i in 0..<width {
     let y = height - 1 - j
     let cell = lines[y][x]
     if cell > maxCol {
-      visible[y][x] |= visibleBottom
+      visible[y][x] |= 1
 
       maxCol = cell
     }
@@ -72,9 +67,7 @@ for i in 0..<width {
 var sum = 0
 for y in 0..<height {
   for x in 0..<width {
-    if visible[y][x] > 0 {
-      sum += 1
-    }
+    sum += Int(visible[y][x])
   }
 }
 print(sum)
